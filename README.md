@@ -149,7 +149,7 @@ gameTypes:
       SPAWNPOINT_BLUE: 5
       HOLOGRAM_GREEN: 1
       WALLPOINT_YELLOW: 10
-    dataPointTypes:
+    dataPointTypeList:
       - SPAWNPOINT
       - HOLOGRAM
       - WALLPOINT
