@@ -1,5 +1,7 @@
 <img width="4096" height="843" alt="Github Repository Header" src="https://github.com/user-attachments/assets/21351b17-ce1b-42a6-a0f8-7405bdb5a413" />
 
+---
+
 ![Datapoint Menu Example](https://i.imgur.com/j7RDTI4.png)
 
 Mineplex Map Parser is a tool for creating datapoints. It allows you to build a map, place down armor stands and then
