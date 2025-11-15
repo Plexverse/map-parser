@@ -11,10 +11,7 @@ on:
       - staging
   # Trigger on PR events
   pull_request:
-    types: [opened, reopened, synchronize]
-  # Trigger on label events (for to-stage label)
-  issues:
-    types: [labeled, unlabeled]
+    types: [opened, reopened, synchronize, labeled, unlabeled]
   # Allow manual triggering
   workflow_dispatch:
 
