@@ -1,11 +1,11 @@
 plugins {
     id("java")
-    id("com.mineplex.sdk.plugin") version "1.11.0"
+    id("com.mineplex.sdk.plugin") version "1.21.9"
     id("maven-publish")
 }
 
 group = "net.plexverse"
-version = "1.1"
+version = "1.2"
 
 repositories {
     mavenLocal()
@@ -39,9 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation("xyz.xenondevs.invui:invui:1.33")
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
-    compileOnly("org.spigotmc:spigot:1.19.2-R0.1-SNAPSHOT")
+    implementation("xyz.xenondevs.invui:invui:1.46")
     implementation("com.google.code.gson:gson:2.10.1")
     compileOnly("org.projectlombok:lombok:1.18.30")
     implementation("com.oop:memory-store:4.0")
@@ -63,7 +61,7 @@ sourceSets {
 
 tasks.register<Jar>("shadowJar") {
     archiveBaseName.set("MapParser")
-    archiveVersion.set("1.1-SNAPSHOT")
+    archiveVersion.set("1.2-SNAPSHOT")
     from(sourceSets.main.get().output)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
