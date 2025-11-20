@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "net.plexverse"
-version = "1.2"
+version = "1.2.0"
 
 repositories {
     mavenLocal()
@@ -72,8 +72,8 @@ tasks.named<Copy>("processResources") {
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    archiveBaseName.set("MapParser")
-    archiveVersion.set("${project.version}-SNAPSHOT")
+    archiveBaseName.set("map-parser")
+    archiveVersion.set("${project.version}")
     archiveClassifier.set("")
     mergeServiceFiles()
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
