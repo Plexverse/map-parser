@@ -12,7 +12,7 @@ parse the map in the format Mineplex Studio accepts, with the appropriate datapo
 This plugin outputs a zip file with the format `GAME_NAME-WORLD_NAME.zip`, this is a minecraft world with the junk files
 ripped out.
 This zip file includes a `dataPoints.json` file: information on this file structure can
-be [found here](https://studio.mineplex.com/docs/sdk/modules/world/datapoints).
+be [found here](https://docs.mineplex.com/docs/sdk/features/world/datapoints).
 
 This also generates a `mapMeta.json` file, with the following structure:
 
