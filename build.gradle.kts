@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    id("com.mineplex.sdk.plugin") version "1.21.9"
     id("maven-publish")
+    id("com.gradleup.shadow") version "9.1.0"
 }
 
 group = "net.plexverse"
@@ -39,12 +39,15 @@ repositories {
 }
 
 dependencies {
-    implementation("xyz.xenondevs.invui:invui:1.46")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    implementation("xyz.xenondevs.invui:invui:2.0.0-alpha.15")
     implementation("com.google.code.gson:gson:2.10.1")
     compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
     implementation("com.oop:memory-store:4.0")
     implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("commons-io:commons-io:2.15.1")
 }
 
 tasks.withType<JavaCompile> {
@@ -59,15 +62,29 @@ sourceSets {
     }
 }
 
-tasks.register<Jar>("shadowJar") {
-    archiveBaseName.set("MapParser")
-    archiveVersion.set("1.2-SNAPSHOT")
-    from(sourceSets.main.get().output)
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 tasks.named<Copy>("processResources") {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    filesMatching("plugin.yml") {
+        filter { line ->
+            line.replace("@version@", project.version.toString())
+        }
+    }
+}
+
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveBaseName.set("MapParser")
+    archiveVersion.set("${project.version}-SNAPSHOT")
+    archiveClassifier.set("")
+    mergeServiceFiles()
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    
+    // Include all dependencies - Paper's reflection rewriter will handle NMS access
+    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
+}
+
+// Make shadowJar the default jar
+tasks.named<Jar>("jar") {
+    enabled = false
 }
 
 tasks.build {

@@ -1,5 +1,5 @@
 name: MapParser
-version: 1.1
+version: '@version@'
 api-version: '1.21'
 main: net.plexverse.mapparser.MapParser
 commands:

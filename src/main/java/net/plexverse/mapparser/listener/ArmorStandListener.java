@@ -61,10 +61,10 @@ public class ArmorStandListener implements Listener {
 
         if (clickedEntity.getPersistentDataContainer().has(Keys.DATAPOINT_KEY)) {
             final DataPointType dataPointType = DataPointType.valueOf(clickedEntity.getPersistentDataContainer().get(Keys.DATAPOINT_KEY, PersistentDataType.STRING));
-            Window.single().setViewer(event.getPlayer()).setGui(new ModifyMenu(clickedEntity, dataPointType)).build().open();
+            Window.builder().setViewer(event.getPlayer()).setUpperGui(new ModifyMenu(clickedEntity, dataPointType).getGui()).build().open();
             return;
         }
 
-        Window.single().setGui(new DataPointMenu(clickedEntity)).setTitle("Datapoint Menu").build(event.getPlayer()).open();
+        Window.builder().setUpperGui(new DataPointMenu(clickedEntity).getGui()).setTitle("Datapoint Menu").build(event.getPlayer()).open();
     }
 }

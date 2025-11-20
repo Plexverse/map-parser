@@ -4,53 +4,44 @@ import net.plexverse.mapparser.menu.buttons.ExitButton;
 import net.plexverse.mapparser.menu.buttons.ForwardButton;
 import net.plexverse.mapparser.menu.buttons.PreviousButton;
 import org.jetbrains.annotations.NotNull;
-import xyz.xenondevs.invui.gui.AbstractPagedGui;
-import xyz.xenondevs.invui.gui.SlotElement;
-import xyz.xenondevs.invui.gui.structure.Markers;
-import xyz.xenondevs.invui.gui.structure.Structure;
+import xyz.xenondevs.invui.gui.PagedGui;
+import xyz.xenondevs.invui.gui.Markers;
+import xyz.xenondevs.invui.gui.Structure;
 import xyz.xenondevs.invui.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagedMenu extends AbstractPagedGui<Item> {
+public class PagedMenu {
+
+    private PagedGui gui;
+    private List<Item> content = new ArrayList<>();
 
     public PagedMenu(@NotNull List<Item> pool) {
-        super(9, 6, false, new Structure(
-                "# # # # # # # # #",
-                "# x x x x x x x #",
-                "# x x x x x x x #",
-                "# x x x x x x x #",
-                "# x x x x x x x #",
-                "# # # < - > # # #")
-                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
-                .addIngredient('<', new PreviousButton())
-                .addIngredient('-', new ExitButton())
-                .addIngredient('>', new ForwardButton()));
-        setContent(pool);
+        this.content = pool;
+        buildGui();
     }
 
-    @Override
-    public void bake() {
-        int contentSize = getContentListSlots().length;
+    private void buildGui() {
+        this.gui = PagedGui.ofItems(new Structure(
+                        "# # # # # # # # #",
+                        "# x x x x x x x #",
+                        "# x x x x x x x #",
+                        "# x x x x x x x #",
+                        "# x x x x x x x #",
+                        "# # # < - > # # #")
+                        .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                        .addIngredient('<', new PreviousButton())
+                        .addIngredient('-', new ExitButton())
+                        .addIngredient('>', new ForwardButton()), content);
+    }
 
-        List<List<SlotElement>> pages = new ArrayList<>();
-        List<SlotElement> page = new ArrayList<>(contentSize);
+    public PagedGui getGui() {
+        return gui;
+    }
 
-        for (Item item : content) {
-            page.add(new SlotElement.ItemSlotElement(item));
-
-            if (page.size() >= contentSize) {
-                pages.add(page);
-                page = new ArrayList<>(contentSize);
-            }
-        }
-
-        if (!page.isEmpty()) {
-            pages.add(page);
-        }
-
-        this.pages = pages;
-        update();
+    public void setContent(List<Item> items) {
+        this.content = items;
+        buildGui();
     }
 }

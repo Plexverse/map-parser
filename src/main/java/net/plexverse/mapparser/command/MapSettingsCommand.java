@@ -43,7 +43,7 @@ public class MapSettingsCommand implements CommandExecutor {
         }
 
         final MapMeta mapSettings = mapSettingsOptional.orElseGet(MapMeta::new);
-        Window.single().setGui(new MapSettingsMenu(player.getWorld(), mapSettings)).setTitle("Settings: " + player.getWorld().getName()).build(player).open();
+        Window.builder().setUpperGui(new MapSettingsMenu(player.getWorld(), mapSettings).getGui()).setTitle("Settings: " + player.getWorld().getName()).build(player).open();
 
         return true;
     }

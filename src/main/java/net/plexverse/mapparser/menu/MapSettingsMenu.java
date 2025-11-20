@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.xenondevs.invui.item.Item;
-import xyz.xenondevs.invui.item.impl.SimpleItem;
+import xyz.xenondevs.invui.item.ItemWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public class MapSettingsMenu extends PagedMenu {
             if(!offlinePlayer.hasPlayedBefore()) return ChatColor.YELLOW + uuid.toString();
             return ChatColor.YELLOW + offlinePlayer.getName();
         }).toList()));
-        final ClickableItem clickableItem = new ClickableItem(new SimpleItem(itemStack).getItemProvider(), player -> {
+        final ClickableItem clickableItem = new ClickableItem(new ItemWrapper(itemStack), player -> {
             AUTHOR_ASKER.ask(player, (response) -> {
                 player.getInventory().close();
 
@@ -112,7 +112,7 @@ public class MapSettingsMenu extends PagedMenu {
     public Item getMapNameItem() {
         final ItemStack itemStack = new ItemStack(Material.NAME_TAG);
         itemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.setDisplayName("Name: " + mapSettings.getMapName()));
-        final ClickableItem clickableItem = new ClickableItem(new SimpleItem(itemStack).getItemProvider(), player -> {
+        final ClickableItem clickableItem = new ClickableItem(new ItemWrapper(itemStack), player -> {
             NAME_ASKER.ask(player, (response) -> {
                 player.getInventory().close();
                 mapSettings.setMapName(response);

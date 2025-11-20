@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.xenondevs.invui.item.Item;
-import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.ItemBuilder;
 import xyz.xenondevs.invui.window.Window;
 
 import java.io.IOException;
@@ -29,8 +29,8 @@ public class DataPointMenu extends PagedMenu {
         final List<Item> items = new ArrayList<>();
         DataPointType.values().stream().filter(dataPointType -> gameType.getDataPointTypeList().contains(dataPointType)).toList().forEach(dataPointType -> {
             final ItemBuilder itemBuilder = new ItemBuilder(dataPointType.getMaterial());
-            itemBuilder.setDisplayName("§d§l" + dataPointType.getMenuName());
-            itemBuilder.addLoreLines("§7", "§7Click to set this datapoints as a §f" + dataPointType.getMenuName());
+            itemBuilder.setLegacyName("§d§l" + dataPointType.getMenuName());
+            itemBuilder.addLegacyLoreLines("§7", "§7Click to set this datapoints as a §f" + dataPointType.getMenuName());
             final ClickableItem simpleItem = new ClickableItem(itemBuilder, (player) -> {
                 DataPointMenu.defineEntity(armorStandEntity, player, dataPointType, true);
                 return null;
@@ -53,8 +53,8 @@ public class DataPointMenu extends PagedMenu {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Window.single()
-                            .setGui(new ModifyMenu(armorStandEntity, dataPointType))
+                    Window.builder()
+                            .setUpperGui(new ModifyMenu(armorStandEntity, dataPointType).getGui())
                             .setViewer(player)
                             .build()
                             .open();

@@ -177,7 +177,11 @@ public class GameType {
             }
 
             final List<DataPointType> dataPointTypeList = new ArrayList<>();
-            final List<String> dataPoints = gameTypeSection.getStringList("dataPointTypeList");
+            // Check both "dataPointTypes" (new) and "dataPointTypeList" (old) for backwards compatibility
+            List<String> dataPoints = gameTypeSection.getStringList("dataPointTypes");
+            if (dataPoints.isEmpty()) {
+                dataPoints = gameTypeSection.getStringList("dataPointTypeList");
+            }
             for (final String dp : dataPoints) {
                 dataPointTypeList.add(DataPointType.valueOf(dp.toUpperCase()));
             }

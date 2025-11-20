@@ -23,7 +23,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import xyz.xenondevs.invui.item.Item;
-import xyz.xenondevs.invui.item.impl.SimpleItem;
+import xyz.xenondevs.invui.item.ItemWrapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,7 +107,7 @@ public class ModifyMenu extends PagedMenu {
     public Item getCloneItem(final DataPointType dataPointType) {
         final ItemStack piston = new ItemStack(Material.STICKY_PISTON);
         piston.editMeta(ItemMeta.class, itemMeta -> itemMeta.setDisplayName("Clone Datapoint"));
-        final ClickableItem clickableItem = new ClickableItem(new SimpleItem(piston).getItemProvider(), player -> {
+        final ClickableItem clickableItem = new ClickableItem(new ItemWrapper(piston), player -> {
             final ItemStack itemStack = ItemBuilder.create(Material.ARMOR_STAND)
                     .persistentData(Keys.DATAPOINT_KEY, dataPointType.name())
                     .persistentData(Keys.TEAM_KEY, getDataContainer().get(Keys.TEAM_KEY, PersistentDataType.STRING))
@@ -122,7 +122,7 @@ public class ModifyMenu extends PagedMenu {
     public Item getYawItem() {
         final ItemStack itemStack = new ItemStack(Material.ENDER_PEARL);
         itemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.setDisplayName("Set Yaw"));
-        final ClickableItem clickableItem = new ClickableItem(new SimpleItem(itemStack).getItemProvider(), player -> {
+        final ClickableItem clickableItem = new ClickableItem(new ItemWrapper(itemStack), player -> {
             YAW_ASKER.ask(player, (response) -> changeDirection(response, (location, direction) -> {
                 location.setYaw(direction);
                 player.sendMessage(this.miniMessage.deserialize("<green>You have set the Yaw to " + direction));
@@ -135,7 +135,7 @@ public class ModifyMenu extends PagedMenu {
     public Item getPitchItem() {
         final ItemStack itemStack = new ItemStack(Material.ARROW);
         itemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.setDisplayName("Set Pitch"));
-        final ClickableItem clickableItem = new ClickableItem(new SimpleItem(itemStack).getItemProvider(), player -> {
+        final ClickableItem clickableItem = new ClickableItem(new ItemWrapper(itemStack), player -> {
             PITCH_ASKER.ask(player, (response) -> changeDirection(response, (location, direction) -> {
                 location.setPitch(direction);
                 player.sendMessage(this.miniMessage.deserialize("<green>You have set the pitch to " + direction));
@@ -149,7 +149,7 @@ public class ModifyMenu extends PagedMenu {
 
         final ItemStack nameItemStack = new ItemStack(Material.NAME_TAG);
         nameItemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.setDisplayName("Name: " + name));
-        final ClickableItem nameItem = new ClickableItem(new SimpleItem(nameItemStack).getItemProvider(), player -> {
+        final ClickableItem nameItem = new ClickableItem(new ItemWrapper(nameItemStack), player -> {
             NAME_ASKER.ask(player, (response) -> {
                 player.getInventory().close();
                 getDataContainer().set(Keys.MINIBUILD_NAME_KEY, PersistentDataType.STRING, response);
@@ -161,7 +161,7 @@ public class ModifyMenu extends PagedMenu {
 
         final ItemStack categoryItemStack = new ItemStack(Material.HOPPER);
         categoryItemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.setDisplayName("Category: " + category));
-        final ClickableItem categoryItem = new ClickableItem(new SimpleItem(categoryItemStack).getItemProvider(), player -> {
+        final ClickableItem categoryItem = new ClickableItem(new ItemWrapper(categoryItemStack), player -> {
             CATEGORY_ASKER.ask(player, (response) -> {
                 player.getInventory().close();
                 getDataContainer().set(Keys.MINIBUILD_CATEGORY_KEY, PersistentDataType.STRING, response);
@@ -198,7 +198,7 @@ public class ModifyMenu extends PagedMenu {
             }
         });
         itemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.setLore(List.of(ChatColor.GRAY + "Click to change!")));
-        final ClickableItem clickableItem = new ClickableItem(new SimpleItem(itemStack).getItemProvider(), player -> {
+        final ClickableItem clickableItem = new ClickableItem(new ItemWrapper(itemStack), player -> {
             MOB_ASKER.ask(player, (response) -> {
 
                 try {
@@ -224,7 +224,7 @@ public class ModifyMenu extends PagedMenu {
     public Item getCustomTeamItem(final DataPointType dataPointType) {
         final ItemStack itemStack = new ItemStack(Material.BLACK_BED);
         itemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.setDisplayName("Set Custom Team"));
-        final ClickableItem clickableItem = new ClickableItem(new SimpleItem(itemStack).getItemProvider(), player -> {
+        final ClickableItem clickableItem = new ClickableItem(new ItemWrapper(itemStack), player -> {
             CUSTOM_TEAM_ASKER.ask(player, (response) -> {
                 player.getInventory().close();
                 getDataContainer().set(Keys.TEAM_KEY, PersistentDataType.STRING, response);

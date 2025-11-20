@@ -4,13 +4,13 @@ import it.unimi.dsi.fastutil.Function;
 import net.plexverse.mapparser.menu.items.ext.State;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import xyz.xenondevs.invui.Click;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.item.ItemProvider;
-import xyz.xenondevs.invui.item.impl.AbstractItem;
-import xyz.xenondevs.invui.item.impl.SimpleItem;
+import xyz.xenondevs.invui.item.AbstractItem;
+import xyz.xenondevs.invui.item.ItemWrapper;
 
 import java.util.List;
 
@@ -27,15 +27,15 @@ public class StateItem extends AbstractItem {
     }
 
     @Override
-    public ItemProvider getItemProvider() {
+    public ItemProvider getItemProvider(Player player) {
         final State state = states.get(currentIndex);
         final ItemStack itemStack = new ItemStack(state.getMaterial());
         itemStack.editMeta(ItemMeta.class, itemMeta -> itemMeta.displayName(state.getName()));
-        return new SimpleItem(itemStack).getItemProvider();
+        return new ItemWrapper(itemStack);
     }
 
     @Override
-    public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
+    public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull Click click) {
         if(currentIndex >= states.size() - 1) {
             currentIndex = -1;
         }
